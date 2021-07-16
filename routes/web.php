@@ -1,7 +1,11 @@
 <?php
+
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\UserLevel;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +21,9 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/ngadmin', [LoginController::class, 'adminlogin'])->name('loginadmin')->middleware('guest');
+Route::post('/ngadmin', [LoginController::class, 'loginadmin'])->name('adminlogin');
 
 Route::get('/email/verify', function () {
     return view('auth.verify');
@@ -37,3 +44,9 @@ Route::post('/email/verification-notification', function (Request $request) {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+Route::middleware(['userlevel:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return 'ini admin';
+    });
+});

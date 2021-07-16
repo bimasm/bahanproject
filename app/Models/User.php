@@ -11,11 +11,12 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasUuid;
 
-    
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'level',
     ];
 
     protected $hidden = [
