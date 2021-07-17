@@ -22,8 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ngadmin', [LoginController::class, 'adminlogin'])->name('loginadmin')->middleware('guest');
-Route::post('/ngadmin', [LoginController::class, 'loginadmin'])->name('adminlogin');
+Route::post('/loginn', [LoginController::class, 'loginuser'])->name('userlogin');
 
 Route::get('/email/verify', function () {
     return view('auth.verify');

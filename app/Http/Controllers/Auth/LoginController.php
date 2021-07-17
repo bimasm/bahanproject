@@ -40,11 +40,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function adminlogin()
-    {
-        return view('auth.adminlogin');
-    }
-    public function loginadmin(Request $request)
+    public function loginuser(Request $request)
     {
         request()->validate(
             [
@@ -57,6 +53,8 @@ class LoginController extends Controller
             if (Auth::attempt($credential)) {
                 if (Auth::user()->level == 'admin') {
                     return redirect()->intended('admin');
+                }elseif(Auth::user()->level == 'user'){
+                    return redirect()->intended('home');
                 }else{
                     return redirect()->back()->with('error','anda tidak memiliki akses');
                 }
