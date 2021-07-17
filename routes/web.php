@@ -5,7 +5,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Middleware\UserLevel;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified','userlevel:user');
 
 Route::middleware(['userlevel:admin'])->group(function () {
     Route::get('/admin', function () {
